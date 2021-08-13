@@ -4,6 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <PackageProjectUrl>https://github.com/AykutSarac/Restaurant-Managment-System</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/AykutSarac/Restaurant-Managment-System</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

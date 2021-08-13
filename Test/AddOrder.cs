@@ -23,6 +23,7 @@ namespace Test
 
             OrderState.SelectedIndex = 0;
             this.panel = panel;
+            this.newOrder = true;
         }
 
         public AddOrder(string id, Panel panel)
@@ -31,74 +32,74 @@ namespace Test
             this.panel = panel;
             this.newOrder = false;
             this.id = id;
-
-            SQLiteConnection connection = new SQLiteConnection("Data Source=database.db");
-            connection.Open();
-
             this.Text = "Sipariş (No: " + id + ")";
 
-            string query = "SELECT * FROM tblOrder WHERE Id = " + id;
+            using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+                connection.Open();
 
-            SQLiteCommand action = new SQLiteCommand(query, connection);
+                string query = "SELECT * FROM tblOrder WHERE Id = " + id;
+                SQLiteCommand action = new SQLiteCommand(query, connection);
+                action.ExecuteNonQuery();
+                SQLiteDataReader data = action.ExecuteReader();
 
-            action.ExecuteNonQuery();
+                if (data.Read())
+                {
+                    CustomerNameInput.Text = data["Customer"].ToString();
+                    OrderInput.Text = data["OrderDetails"].ToString();
+                    NotesInput.Text = data["Notes"].ToString();
+                    AddressInput.Text = data["Address"].ToString();
+                    OrderState.SelectedIndex = Int32.Parse(data["State"].ToString());
+                }
 
-            SQLiteDataReader data = action.ExecuteReader();
-
-            if (data.Read())
-            {
-                CustomerNameInput.Text = data["Customer"].ToString();
-                OrderInput.Text = data["OrderDetails"].ToString();
-                NotesInput.Text = data["Notes"].ToString();
-                AddressInput.Text = data["Address"].ToString();
-                OrderState.SelectedIndex = Int32.Parse(data["State"].ToString());
+                data.Close();
+                connection.Close();
             }
-
-            connection.Close();
-            panel.UpdateTable();
         }
 
         private void addOrderBtn_Click(object sender, EventArgs e)
         {
-            SQLiteConnection connection = new SQLiteConnection("Data Source=database.db");
-            connection.Open();
-
-            if (newOrder)
+            using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db"))
             {
-                string action = "INSERT INTO tblOrder(Customer, OrderDetails, Address, Notes, Payment, State) values(@Customer, @OrderDetails, @Address, @Notes, @Payment, @State)";
+                try
+                {
+                    connection.Open();
+                    string action;
 
-                SQLiteCommand actionRun = new SQLiteCommand(action, connection);
-                actionRun.Parameters.AddWithValue("@Customer", CustomerNameInput.Text);
-                actionRun.Parameters.AddWithValue("@OrderDetails", OrderInput.Text);
-                actionRun.Parameters.AddWithValue("@Address", AddressInput.Text);
-                actionRun.Parameters.AddWithValue("@Notes", NotesInput.Text);
-                actionRun.Parameters.AddWithValue("@Payment", price.Text);
-                actionRun.Parameters.AddWithValue("@State", OrderState.SelectedIndex);
+                    if (newOrder)
+                    {
+                        action = "INSERT INTO tblOrder(Customer, OrderDetails, Address, Notes, Payment, State) values(@Customer, @OrderDetails, @Address, @Notes, @Payment, @State)";
+                        MessageBox.Show("Sipariş Başarıyla Eklendi");
+                    }
+                    else
+                    {
+                        action = "UPDATE tblOrder SET Customer = @Customer, OrderDetails = @OrderDetails, Address = @Address, Notes = @Notes, Payment = @Payment, State = @State WHERE Id=" + this.id;
+                        MessageBox.Show("Sipariş Başarıyla Güncellendi");
+                    }
 
-                actionRun.ExecuteNonQuery();
-                actionRun.Dispose();
-                MessageBox.Show("Sipariş Başarıyla Eklendi");
-            } else {
-                string action = "UPDATE tblOrder SET Customer = @Customer, OrderDetails = @OrderDetails, Address = @Address, Notes = @Notes, Payment = @Payment, State = @State WHERE Id = " + this.id;
-                MessageBox.Show("Sipariş Başarıyla Güncellendi");
+                    SQLiteCommand actionRun = new SQLiteCommand(action, connection);
 
-                SQLiteCommand actionRun = new SQLiteCommand(action, connection);
-                actionRun.Parameters.AddWithValue("@Customer", CustomerNameInput.Text);
-                actionRun.Parameters.AddWithValue("@OrderDetails", OrderInput.Text);
-                actionRun.Parameters.AddWithValue("@Address", AddressInput.Text);
-                actionRun.Parameters.AddWithValue("@Notes", NotesInput.Text);
-                actionRun.Parameters.AddWithValue("@Payment", price.Text);
-                actionRun.Parameters.AddWithValue("@State", OrderState.SelectedIndex);
+                    actionRun.Parameters.AddWithValue("@Customer", CustomerNameInput.Text);
+                    actionRun.Parameters.AddWithValue("@OrderDetails", OrderInput.Text);
+                    actionRun.Parameters.AddWithValue("@Address", AddressInput.Text);
+                    actionRun.Parameters.AddWithValue("@Notes", NotesInput.Text);
+                    actionRun.Parameters.AddWithValue("@Payment", price.Text);
+                    actionRun.Parameters.AddWithValue("@State", OrderState.SelectedIndex);
 
-                actionRun.ExecuteNonQuery();
-                actionRun.Dispose();
+                    actionRun.ExecuteNonQuery();
+                    actionRun.Dispose();
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.ToString());
+                }
+                finally
+                {
+                    connection.Close();
+                    panel.UpdateTable();
+                    this.panel.Focus();
+                    this.Close();
+                }
             }
-
-            
-            connection.Close();
-            panel.UpdateTable();
-            this.panel.Focus();
-            this.Close();
         }
     }
 }

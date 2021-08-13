@@ -78,7 +78,7 @@ namespace Test
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::Test.Properties.Resources.icons8_lock_96;
+            this.pictureBox1.Image = global::OrderMS.Properties.Resources.icons8_lock_96;
             this.pictureBox1.Location = new System.Drawing.Point(214, 76);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(96, 96);

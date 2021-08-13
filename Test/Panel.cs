@@ -19,16 +19,17 @@ namespace Test
 
         public void UpdateTable()
         {
-            SQLiteConnection connection = new SQLiteConnection("Data Source=database.db");
+            using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db"))
+            {
+                connection.Open();
 
-            connection.Open();
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter("Select * From tblOrder", connection);
+                DataSet dset = new DataSet();
+                adapter.Fill(dset, "info");
+                connection.Close();
 
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter("Select * From tblOrder", connection);
-            DataSet dset = new DataSet();
-            adapter.Fill(dset, "info");
-            OrderTable.DataSource = dset.Tables[0];
-
-            connection.Close();
+                OrderTable.DataSource = dset.Tables[0];
+            }
         }
         
 
