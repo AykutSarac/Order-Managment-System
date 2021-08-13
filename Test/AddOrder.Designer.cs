@@ -39,15 +39,20 @@ namespace Test
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.price = new System.Windows.Forms.TextBox();
-            this.addOrderBtn = new System.Windows.Forms.Button();
             this.OrderState = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.NotesInput = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.addOrderBtn = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.deleteOrder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // CustomerNameInput
@@ -160,17 +165,6 @@ namespace Test
             this.price.TabIndex = 9;
             this.price.Text = "0 TL";
             // 
-            // addOrderBtn
-            // 
-            this.addOrderBtn.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.addOrderBtn.Location = new System.Drawing.Point(0, 401);
-            this.addOrderBtn.Name = "addOrderBtn";
-            this.addOrderBtn.Size = new System.Drawing.Size(959, 41);
-            this.addOrderBtn.TabIndex = 11;
-            this.addOrderBtn.Text = "Ekle / Güncelle";
-            this.addOrderBtn.UseVisualStyleBackColor = true;
-            this.addOrderBtn.Click += new System.EventHandler(this.addOrderBtn_Click);
-            // 
             // OrderState
             // 
             this.OrderState.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -215,7 +209,8 @@ namespace Test
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(959, 401);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(959, 462);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // NotesInput
@@ -255,15 +250,62 @@ namespace Test
             this.tableLayoutPanel2.Size = new System.Drawing.Size(459, 61);
             this.tableLayoutPanel2.TabIndex = 11;
             // 
+            // addOrderBtn
+            // 
+            this.addOrderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addOrderBtn.Location = new System.Drawing.Point(3, 3);
+            this.addOrderBtn.Name = "addOrderBtn";
+            this.addOrderBtn.Size = new System.Drawing.Size(805, 35);
+            this.addOrderBtn.TabIndex = 11;
+            this.addOrderBtn.Text = "Ekle / Güncelle";
+            this.addOrderBtn.UseVisualStyleBackColor = true;
+            this.addOrderBtn.Click += new System.EventHandler(this.addOrderBtn_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tableLayoutPanel3);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 462);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(959, 41);
+            this.panel1.TabIndex = 14;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 84.56726F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.43274F));
+            this.tableLayoutPanel3.Controls.Add(this.addOrderBtn, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.deleteOrder, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(959, 41);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // deleteOrder
+            // 
+            this.deleteOrder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.deleteOrder.Location = new System.Drawing.Point(814, 3);
+            this.deleteOrder.Name = "deleteOrder";
+            this.deleteOrder.Size = new System.Drawing.Size(142, 35);
+            this.deleteOrder.TabIndex = 12;
+            this.deleteOrder.Text = "Sil";
+            this.deleteOrder.UseVisualStyleBackColor = true;
+            this.deleteOrder.Click += new System.EventHandler(this.deleteOrder_Click);
+            // 
             // AddOrder
             // 
             this.AcceptButton = this.addOrderBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 36F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(959, 442);
+            this.ClientSize = new System.Drawing.Size(959, 503);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.addOrderBtn);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Poppins", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -274,6 +316,8 @@ namespace Test
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -290,11 +334,14 @@ namespace Test
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox price;
-        private System.Windows.Forms.Button addOrderBtn;
         private System.Windows.Forms.ComboBox OrderState;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TextBox NotesInput;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Button addOrderBtn;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button deleteOrder;
     }
 }

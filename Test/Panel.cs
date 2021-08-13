@@ -31,7 +31,7 @@ namespace Test
                 OrderTable.DataSource = dset.Tables[0];
             }
         }
-        
+
 
         private void Panel_FormClosing_1(object sender, FormClosingEventArgs e)
         {
@@ -61,6 +61,37 @@ namespace Test
 
             AddOrder AddOrderForm = new AddOrder(id, this);
             AddOrderForm.Show();
+        }
+
+        private void OrderTable_DataSourceChanged(object sender, EventArgs e)
+        {
+            OrderTable.Columns[0].HeaderText = "No";
+            OrderTable.Columns[1].HeaderText = "Müşteri İsmi";
+            OrderTable.Columns[2].HeaderText = "Sipariş";
+            OrderTable.Columns[3].HeaderText = "Adres";
+            OrderTable.Columns[4].HeaderText = "Notlar";
+            OrderTable.Columns[5].HeaderText = "Ücret";
+            OrderTable.Columns[6].HeaderText = "Durum";
+
+            for (int i = 0; i < OrderTable.Rows.Count; i++)
+            {
+                int state = Int32.Parse(OrderTable.Rows[i].Cells[6].Value.ToString());
+                OrderTable.Rows[i].Cells[6].Value = GetState(state);
+            }
+        }
+
+        private string GetState(int state)
+        {
+            var stateMap = new Dictionary<int, string>()
+{
+            {0, "Sipariş Alındı"},
+            {1, "Hazırlanıyor"},
+            {2, "Yolda"},
+            {3, "İptal"},
+};
+            string output;
+
+            return stateMap.TryGetValue(state, out output) ? output : "default";
         }
     }
 }

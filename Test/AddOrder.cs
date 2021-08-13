@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using OrderMS;
 
 namespace Test
 
@@ -15,7 +16,7 @@ namespace Test
         Panel panel;
         bool newOrder = true;
         string id;
-        
+
 
         public AddOrder(Panel panel)
         {
@@ -24,6 +25,9 @@ namespace Test
             OrderState.SelectedIndex = 0;
             this.panel = panel;
             this.newOrder = true;
+
+            this.deleteOrder.Visible = false;
+            this.tableLayoutPanel3.ColumnCount = 1;
         }
 
         public AddOrder(string id, Panel panel)
@@ -34,7 +38,8 @@ namespace Test
             this.id = id;
             this.Text = "Sipariş (No: " + id + ")";
 
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+            using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db"))
+            {
                 connection.Open();
 
                 string query = "SELECT * FROM tblOrder WHERE Id = " + id;
@@ -58,47 +63,36 @@ namespace Test
 
         private void addOrderBtn_Click(object sender, EventArgs e)
         {
-            using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db"))
+
+            try
             {
-                try
-                {
-                    connection.Open();
-                    string action;
+                Crud.AddOrder(this.newOrder, CustomerNameInput.Text, OrderInput.Text, AddressInput.Text, NotesInput.Text, price.Text, OrderState.SelectedIndex, this.id);
 
-                    if (newOrder)
-                    {
-                        action = "INSERT INTO tblOrder(Customer, OrderDetails, Address, Notes, Payment, State) values(@Customer, @OrderDetails, @Address, @Notes, @Payment, @State)";
-                        MessageBox.Show("Sipariş Başarıyla Eklendi");
-                    }
-                    else
-                    {
-                        action = "UPDATE tblOrder SET Customer = @Customer, OrderDetails = @OrderDetails, Address = @Address, Notes = @Notes, Payment = @Payment, State = @State WHERE Id=" + this.id;
-                        MessageBox.Show("Sipariş Başarıyla Güncellendi");
-                    }
+                this.panel.UpdateTable();
+                this.panel.Focus();
+                Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("İşlem gerçekleştirilirken bir hata meydana geldi!\n" + error.ToString());
+            }
 
-                    SQLiteCommand actionRun = new SQLiteCommand(action, connection);
+        }
 
-                    actionRun.Parameters.AddWithValue("@Customer", CustomerNameInput.Text);
-                    actionRun.Parameters.AddWithValue("@OrderDetails", OrderInput.Text);
-                    actionRun.Parameters.AddWithValue("@Address", AddressInput.Text);
-                    actionRun.Parameters.AddWithValue("@Notes", NotesInput.Text);
-                    actionRun.Parameters.AddWithValue("@Payment", price.Text);
-                    actionRun.Parameters.AddWithValue("@State", OrderState.SelectedIndex);
+        private void deleteOrder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Crud.DeleteOrder(this.id);
 
-                    actionRun.ExecuteNonQuery();
-                    actionRun.Dispose();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.ToString());
-                }
-                finally
-                {
-                    connection.Close();
-                    panel.UpdateTable();
-                    this.panel.Focus();
-                    this.Close();
-                }
+                MessageBox.Show("Sipariş Silindi!");
+                this.panel.UpdateTable();
+                this.panel.Focus();
+                Close();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show("İşlem gerçekleştirilirken bir hata meydana geldi!\n" + error.ToString());
             }
         }
     }

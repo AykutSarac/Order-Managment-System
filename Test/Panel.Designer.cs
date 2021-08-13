@@ -88,7 +88,9 @@ namespace Test
             this.OrderTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.OrderTable, "OrderTable");
             this.OrderTable.Name = "OrderTable";
+            this.OrderTable.ReadOnly = true;
             this.OrderTable.RowTemplate.Height = 29;
+            this.OrderTable.DataSourceChanged += new System.EventHandler(this.OrderTable_DataSourceChanged);
             this.OrderTable.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.OrderTable_CellMouseDoubleClick);
             // 
             // navbar
