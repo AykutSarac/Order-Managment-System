@@ -7,52 +7,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OrderMS;
 
-namespace Test
-{
-    public partial class LoginForm : Form
-    {
-        public LoginForm()
-        {
-            InitializeComponent();
-        }
-
-        private void login_Click(object sender, EventArgs e)
-        {
-            string Username = username.Text;
-            string Password = password.Text;
-
-            if (Username == "admin" && Password == "123")
-            {
-                // Open Panel
-                this.Hide();
-                Panel panel = new Panel();
-                panel.Show();
-            }
-            else {
-                MessageBox.Show("Kullanıcı Adı veya Şifre hatalı!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void username_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                password.Focus();
-            }
-        }
-
-        private void password_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                login.PerformClick();
-            }
-        }
-
-        private void Login_Shown(object sender, EventArgs e)
-        {
-            username.Focus();
-        }
+namespace Test {
+  public partial class LoginForm : Form {
+    public LoginForm() {
+      InitializeComponent();
     }
+
+    private void login_Click(object sender, EventArgs e) {
+      string Username = username.Text;
+      string Password = password.Text;
+
+      try {
+        int result = Crud.UserLogin(Username, Password);
+
+        if (result == 1) {
+
+          // Open Panel and hide Login Form
+          this.Hide();
+          Panel panel = new Panel();
+          panel.Show();
+        }
+      } catch (Exception error) {
+        MessageBox.Show(error.Message, "Bir hata meydana geldi!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
+
+    private void username_KeyDown(object sender, KeyEventArgs e) {
+
+      // Skip to Password Input on enter
+      if (e.KeyCode == Keys.Enter) {
+        password.Focus();
+      }
+    }
+
+    private void password_KeyDown(object sender, KeyEventArgs e) {
+
+      // Submit on enter
+      if (e.KeyCode == Keys.Enter) {
+        login.PerformClick();
+      }
+    }
+
+    private void Login_Shown(object sender, EventArgs e) {
+      username.Focus();
+    }
+
+  }
 }
