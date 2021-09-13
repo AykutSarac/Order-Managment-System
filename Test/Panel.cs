@@ -8,32 +8,45 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 
 namespace Test {
+
   public partial class Panel : Form {
-    public Panel() {
+    readonly int userType = 0;
+
+    public Panel(string userType) {
+      this.userType = Convert.ToInt32(userType);
       InitializeComponent();
       UpdateTable();
+
+      // Hide add user button if user is not admin
+      if (this.userType < 1) AddUserBn.Visible = false;
     }
 
     public void UpdateTable() {
-      using SQLiteConnection connection = new SQLiteConnection("Data Source=database.db"); connection.Open();
+      using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+        try {
+          connection.Open();
+          // Return Orders List ordered by their states
+          SQLiteDataAdapter adapter = new SQLiteDataAdapter("Select * From tblOrder ORDER BY State ASC", connection);
 
-      // Return Orders List ordered by their states
-      SQLiteDataAdapter adapter = new SQLiteDataAdapter("Select * From tblOrder ORDER BY State ASC", connection);
-      DataSet dset = new DataSet();
-      adapter.Fill(dset, "info");
-      connection.Close();
+          DataSet dset = new DataSet();
+          adapter.Fill(dset, "info");
 
-      OrderTable.DataSource = dset.Tables[0];
+          OrderTable.DataSource = dset.Tables[0];
 
-      // Remove table selection
-      OrderTable.ClearSelection();
+          // Remove table selection
+          OrderTable.ClearSelection();
+
+          adapter.Dispose();
+        } catch (Exception e) {
+          MessageBox.Show(e.Message);
+        }
+      }
     }
 
 
     private void Panel_FormClosing_1(object sender, FormClosingEventArgs e) {
       Application.Exit();
     }
-
 
     private void button3_Click(object sender, EventArgs e) {
       DialogResult result = MessageBox.Show("Çıkmak istediğinize emin misiniz?", "Çıkış", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
@@ -88,12 +101,18 @@ namespace Test {
         {0, "Sipariş Alındı"},
         {1, "Hazırlanıyor"},
         {2, "Yolda"},
-        {3, "İptal"},
+        {3, "Teslim Edildi"},
+        {4, "İptal"}
       };
 
       string output;
 
       return stateMap.TryGetValue(state, out output) ? output : "default";
+    }
+
+    private void AddUserBn_Click(object sender, EventArgs e) {
+      OrderMS.UserManagmentForm userManagment = new OrderMS.UserManagmentForm();
+      userManagment.Show();
     }
   }
 }

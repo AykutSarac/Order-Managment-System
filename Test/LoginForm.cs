@@ -20,13 +20,13 @@ namespace Test {
       string Password = password.Text;
 
       try {
-        int result = Crud.UserLogin(Username, Password);
+        string result = Crud.UserLogin(Username, Password);
 
-        if (result == 1) {
+        if (result.Length > 0) {
 
           // Open Panel and hide Login Form
           this.Hide();
-          Panel panel = new Panel();
+          Panel panel = new Panel(result);
           panel.Show();
         }
       } catch (Exception error) {
@@ -54,5 +54,8 @@ namespace Test {
       username.Focus();
     }
 
+    private void LoginForm_FormClosing(object sender, FormClosingEventArgs e) {
+      Application.Exit();
+    }
   }
 }

@@ -37,9 +37,10 @@ namespace Test
       this.panel3 = new System.Windows.Forms.Panel();
       this.OrderTable = new System.Windows.Forms.DataGridView();
       this.navbar = new System.Windows.Forms.TableLayoutPanel();
-      this.button3 = new System.Windows.Forms.Button();
       this.pictureBox1 = new System.Windows.Forms.PictureBox();
       this.label1 = new System.Windows.Forms.Label();
+      this.button3 = new System.Windows.Forms.Button();
+      this.AddUserBn = new System.Windows.Forms.Button();
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.layout.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -67,9 +68,11 @@ namespace Test
       // 
       // addOrderBtn
       // 
+      this.addOrderBtn.BackColor = System.Drawing.Color.DodgerBlue;
       resources.ApplyResources(this.addOrderBtn, "addOrderBtn");
+      this.addOrderBtn.ForeColor = System.Drawing.Color.PeachPuff;
       this.addOrderBtn.Name = "addOrderBtn";
-      this.addOrderBtn.UseVisualStyleBackColor = true;
+      this.addOrderBtn.UseVisualStyleBackColor = false;
       this.addOrderBtn.Click += new System.EventHandler(this.addOrderBtn_Click);
       // 
       // panel3
@@ -99,18 +102,11 @@ namespace Test
       // 
       this.navbar.BackColor = System.Drawing.Color.DodgerBlue;
       resources.ApplyResources(this.navbar, "navbar");
-      this.navbar.Controls.Add(this.button3, 2, 0);
       this.navbar.Controls.Add(this.pictureBox1, 0, 0);
       this.navbar.Controls.Add(this.label1, 1, 0);
+      this.navbar.Controls.Add(this.button3, 3, 0);
+      this.navbar.Controls.Add(this.AddUserBn, 2, 0);
       this.navbar.Name = "navbar";
-      // 
-      // button3
-      // 
-      this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-      resources.ApplyResources(this.button3, "button3");
-      this.button3.Name = "button3";
-      this.button3.UseVisualStyleBackColor = false;
-      this.button3.Click += new System.EventHandler(this.button3_Click);
       // 
       // pictureBox1
       // 
@@ -125,6 +121,23 @@ namespace Test
       this.label1.ForeColor = System.Drawing.Color.PeachPuff;
       this.label1.Name = "label1";
       // 
+      // button3
+      // 
+      this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+      resources.ApplyResources(this.button3, "button3");
+      this.button3.Name = "button3";
+      this.button3.UseVisualStyleBackColor = false;
+      this.button3.Click += new System.EventHandler(this.button3_Click);
+      // 
+      // AddUserBn
+      // 
+      this.AddUserBn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+      this.AddUserBn.BackgroundImage = global::OrderMS.Properties.Resources.icons8_add_user_male_40;
+      resources.ApplyResources(this.AddUserBn, "AddUserBn");
+      this.AddUserBn.Name = "AddUserBn";
+      this.AddUserBn.UseVisualStyleBackColor = false;
+      this.AddUserBn.Click += new System.EventHandler(this.AddUserBn_Click);
+      // 
       // contextMenuStrip1
       // 
       this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -137,7 +150,7 @@ namespace Test
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.White;
       this.Controls.Add(this.layout);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.Name = "Panel";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Panel_FormClosing_1);
       this.layout.ResumeLayout(false);
@@ -163,5 +176,6 @@ namespace Test
         private System.Windows.Forms.TableLayoutPanel navbar;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-    }
+    private System.Windows.Forms.Button AddUserBn;
+  }
 }
