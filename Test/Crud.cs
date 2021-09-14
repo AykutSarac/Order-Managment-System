@@ -37,7 +37,7 @@ namespace OrderMS {
     }
 
     public static void DeleteUserById(string id) {
-      using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=Database.db")) {
+      using (SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db")) {
         try {
           connection.Open();
           string action = "DELETE FROM tblUsers WHERE Id=" + id;
