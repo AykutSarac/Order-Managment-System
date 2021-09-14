@@ -22,7 +22,7 @@ namespace Test {
     }
 
     public void UpdateTable() {
-      using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+      using (SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db")) {
         try {
           connection.Open();
           // Return Orders List ordered by their states
@@ -64,6 +64,7 @@ namespace Test {
 
     // Edit Order
     private void OrderTable_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
+      if (e.RowIndex == -1) return;
       string id = OrderTable.Rows[e.RowIndex].Cells[0].Value.ToString();
 
       AddOrder AddOrderForm = new AddOrder(id, this);

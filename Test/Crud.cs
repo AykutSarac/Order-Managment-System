@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SQLite;
 using System.Data;
+using System.IO;
 
 namespace OrderMS {
   public class Crud {
     public static void AddOrder(bool newOrder, string CustomerName, string OrderInput, string Address, string Notes, string Price, int OrderState, string id) {
-      using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+      using (SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db")) {
         try {
           connection.Open();
           string action;
@@ -36,7 +37,7 @@ namespace OrderMS {
     }
 
     public static void DeleteUserById(string id) {
-      using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+      using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=Database.db")) {
         try {
           connection.Open();
           string action = "DELETE FROM tblUsers WHERE Id=" + id;
@@ -51,7 +52,7 @@ namespace OrderMS {
     }
 
     public static void DeleteOrderById(string id) {
-      using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+      using (SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db")) {
         try {
           connection.Open();
           string action = "DELETE FROM tblOrder WHERE Id=" + id;
@@ -66,7 +67,7 @@ namespace OrderMS {
     }
 
     public static string UserLogin(string username, string password) {
-      using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db;Version=3;")) {
+      using (SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db;Version=3")) {
         try {
           connection.Open();
 

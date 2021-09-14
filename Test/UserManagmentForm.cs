@@ -18,7 +18,7 @@ namespace OrderMS {
     public void UpdateTable() {
 
       try {
-        using SQLiteConnection connection = new SQLiteConnection("Data Source=database.db");
+        using SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db");
         connection.Open();
 
         // Return Orders List ordered by their states
@@ -81,7 +81,7 @@ namespace OrderMS {
       bool isAdmin = isAdminCB.Checked;
 
       try {
-        using SQLiteConnection connection = new SQLiteConnection("Data Source=database.db");
+        using SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db");
         connection.Open();
 
         string action = "INSERT INTO tblUsers(username, password, type) values(@username, @password, @type)";

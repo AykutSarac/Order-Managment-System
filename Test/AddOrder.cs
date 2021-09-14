@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using OrderMS;
@@ -35,7 +30,7 @@ namespace Test {
       this.id = id;
       this.Text = "Sipariş (No: " + id + ")";
 
-      using (SQLiteConnection connection = new SQLiteConnection("Data Source=database.db")) {
+      using (SQLiteConnection connection = new SQLiteConnection("Data Source=Database.db")) {
         connection.Open();
         string query = "SELECT * FROM tblOrder WHERE Id = " + id;
 
