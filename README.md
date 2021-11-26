@@ -50,4 +50,5 @@ This project has been created by [AykutSarac](https://github.com/AykutSarac).
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [Creative Commons Attribution-ShareAlike 4.0 International Public
+      License](LICENSE).
